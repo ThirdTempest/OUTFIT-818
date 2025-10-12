@@ -140,11 +140,13 @@ This project uses images without specific copyright licensing. Please replace al
 
 Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
 
-## 👨‍💻 Developer
+## 👨‍💻 Team 818
 
-**Nisarg Vekariya**
+Developed with ❤️ by Team 818
 
-- GitHub: [@Nisarg-Vekariya](https://github.com/Nisarg-Vekariya)
+### Contact
+- **Email**: team.818x@gmail.com
+- **GitHub**: [Nisarg-Vekariya](https://github.com/Nisarg-Vekariya)
 
 ## 📞 Support
 
