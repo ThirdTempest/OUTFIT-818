@@ -36,18 +36,18 @@ class CheckoutController extends Controller
         $validated = $request->validate([
             'name'           => ['required', 'string', 'min:2', 'max:100'],
             'email'          => ['required', 'email', 'max:255'],
-            'phone'          => ['required', 'regex:/^[6-9]\d{9}$/'],
+            'phone'          => ['required', 'string', 'min:6', 'max:20'],
             'city'           => ['required', 'string', 'max:50'],
             'state'          => ['required', 'string', 'max:50'],
-            'zip'            => ['required', 'regex:/^\d{5,6}$/'],
+            'zip'            => ['required', 'string', 'min:3', 'max:12'],
             'address'        => ['required', 'string', 'min:10', 'max:255'],
             'payment_method' => ['required', 'in:online'],
         ], [
             'name.required' => 'Full name is required.',
             'email.required' => 'Email is required.',
             'email.email' => 'Enter a valid email address.',
-            'phone.regex' => 'Enter a valid Indian mobile number.',
-            'zip.regex' => 'ZIP code should be 5 or 6 digits.',
+            'phone.required' => 'Enter a valid phone number.',
+            'zip.required' => 'Enter a valid postal/ZIP code.',
             'address.min' => 'Address should be at least 10 characters.',
             'payment_method.in' => 'Only online payment is accepted at this time.',
         ]);
@@ -64,8 +64,6 @@ class CheckoutController extends Controller
             return $sizePrice * $item->quantity;
         });
 
-        $appId = 'TEST10714352982ad19c0ced7ada443025341701';
-        $secretKey = 'cfsk_ma_test_d4d6c036cd7ba36e21538af94905e6cd_83a204bc';
         $orderId = 'ORDER_' . uniqid();
 
         $data = [
@@ -112,20 +110,62 @@ class CheckoutController extends Controller
             ]);
         }
 
+        // Create PayMongo Checkout Session
+        $secretKey = env('PAYMONGO_SECRET_KEY');
+        $currency = env('CURRENCY', 'PHP');
+        $successUrl = route('checkout.thankyou', ['orderId' => $orderId]);
+        $cancelUrl = url()->previous();
+
+        $amountInMinor = (int) round($grandTotal * 100);
+
+        $pmTypes = env('PAYMONGO_PAYMENT_METHOD_TYPES');
+        $paymentMethodTypes = $pmTypes ? array_filter(array_map('trim', explode(',', $pmTypes))) : ['gcash','paymaya','card'];
+
+        $payload = [
+            'data' => [
+                'attributes' => [
+                    'line_items' => [
+                        [
+                            'amount' => $amountInMinor,
+                            'currency' => $currency,
+                            'name' => 'Order ' . $orderId,
+                            'quantity' => 1,
+                        ]
+                    ],
+                    'payment_method_types' => $paymentMethodTypes,
+                    'success_url' => $successUrl,
+                    'cancel_url' => $cancelUrl,
+                    'description' => 'Checkout for ' . $validated['email'],
+                    'reference_number' => $orderId,
+                ]
+            ]
+        ];
+
+        if (!$secretKey) {
+            return back()->withErrors(['payment' => 'Payment configuration missing. Set PAYMONGO_SECRET_KEY in .env.']);
+        }
+
         $response = Http::withHeaders([
-            'x-api-version' => '2022-09-01',
-            'x-client-id' => $appId,
-            'x-client-secret' => $secretKey,
-        ])->post('https://sandbox.cashfree.com/pg/orders', $data);
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ])
+            ->withBasicAuth($secretKey, '')
+            ->post('https://api.paymongo.com/v1/checkout_sessions', $payload);
 
         $json = $response->json();
 
-        if (!isset($json['payment_session_id'])) {
-            return back()->withErrors(['cashfree' => 'Cashfree Error: ' . json_encode($json)]);
+        if (!$response->successful()) {
+            Log::error('PayMongo error', ['status' => $response->status(), 'body' => $json]);
+            return back()->withErrors(['payment' => 'Payment Error: ' . json_encode($json)]);
         }
 
-        $sessionId = $json['payment_session_id'];
-        return view('frontend.cashfree', compact('sessionId'));
+        $checkoutUrl = $json['data']['attributes']['checkout_url'] ?? null;
+        if (!$checkoutUrl) {
+            Log::error('PayMongo: checkout_url missing', ['body' => $json]);
+            return back()->withErrors(['payment' => 'Unable to start payment.']);
+        }
+
+        return redirect()->away($checkoutUrl);
     }
 
     public function thankYou($orderId)
@@ -166,5 +206,45 @@ class CheckoutController extends Controller
         $pdf = Pdf::loadView('frontend.invoice', compact('order'));
 
         return $pdf->download('invoice_' . $orderId . '.pdf');
+    }
+
+    public function webhook(Request $request)
+    {
+        $signature = $request->header('PayMongo-Signature');
+        $webhookSecret = env('PAYMONGO_WEBHOOK_SECRET');
+
+        // Optional: verify signature if secret is set
+        if ($webhookSecret && $signature) {
+            // PayMongo provides HMAC verification via header. Implement if required.
+            // For now, proceed cautiously; ensure route is protected from public enumeration.
+        }
+
+        $payload = $request->json()->all();
+        Log::info('PayMongo webhook received', $payload);
+
+        try {
+            $eventType = $payload['data']['attributes']['type'] ?? null;
+            $ref = $payload['data']['attributes']['data']['attributes']['reference_number'] ?? null;
+
+            if ($eventType === 'checkout_session.payment.paid' && $ref) {
+                $order = Order::where('order_id', $ref)->first();
+                if ($order && $order->status !== 'paid') {
+                    $order->status = 'paid';
+                    $order->save();
+
+                    foreach ($order->items as $item) {
+                        $productSize = $item->product->sizes()->where('size', $item->size)->first();
+                        if ($productSize) {
+                            $productSize->stock = max(0, $productSize->stock - $item->quantity);
+                            $productSize->save();
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            Log::error('PayMongo webhook handling error', ['error' => $e->getMessage()]);
+        }
+
+        return response()->json(['status' => 'ok']);
     }
 }

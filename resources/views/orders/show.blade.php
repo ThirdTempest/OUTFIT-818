@@ -20,7 +20,7 @@
             <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
             <p><strong>Order ID:</strong> {{ $order->order_id }}</p>
             <p><strong>Date:</strong> {{ $order->created_at->format('d M Y, h:i A') }}</p>
-            <p><strong>Total:</strong> ₹{{ number_format($order->total_amount, 2) }}</p>
+            <p><strong>Total:</strong> ₱{{ number_format($order->total_amount, 2) }}</p>
             <p><strong>Status:</strong>
                 <span class="px-2 py-1 text-sm rounded {{ $order->status == 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
                     {{ ucfirst($order->status) }}
@@ -55,8 +55,8 @@
                         </td>
                         <td class="py-4 px-4">{{ $item->size }}</td>
                         <td class="py-4 px-4">{{ $item->quantity }}</td>
-                        <td class="py-4 px-4">₹{{ number_format($item->price, 2) }}</td>
-                        <td class="py-4 px-4">₹{{ number_format($item->price * $item->quantity, 2) }}</td>
+                        <td class="py-4 px-4">₱{{ number_format($item->price, 2) }}</td>
+                        <td class="py-4 px-4">₱{{ number_format($item->price * $item->quantity, 2) }}</td>
                     </tr>
                     @endforeach
                 </tbody>

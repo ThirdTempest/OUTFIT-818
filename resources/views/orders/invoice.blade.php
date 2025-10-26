@@ -6,7 +6,7 @@
     <title>Invoice - {{ $order->order_id }}</title>
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'DejaVu Sans', sans-serif;
         }
 
         table {
@@ -30,8 +30,8 @@
 <body>
     <h2>Invoice</h2>
     <p><strong>Order ID:</strong> {{ $order->order_id }}</p>
-    <p><strong>Date:</strong> {{ $order->created_at->setTimezone('Asia/Kolkata')->format('d M Y, h:i A') }}</p>
-    <p><strong>Total:</strong> INR {{ number_format($order->total_amount, 2) }}</p>
+    <p><strong>Date:</strong> {{ $order->created_at->format('d M Y, h:i A') }}</p>
+    <p><strong>Total:</strong> ₱{{ number_format($order->total_amount, 2) }}</p>
 
     <table>
         <thead>
@@ -49,8 +49,8 @@
     <td>{{ $item->product_name }}</td>
     <td>{{ $item->size }}</td>
     <td>{{ $item->quantity }}</td>
-    <td>INR {{ number_format($item->price, 2) }}</td>
-    <td>INR {{ number_format($item->price * $item->quantity, 2) }}</td>
+    <td>₱{{ number_format($item->price, 2) }}</td>
+    <td>₱{{ number_format($item->price * $item->quantity, 2) }}</td>
 </tr>
 
             @endforeach

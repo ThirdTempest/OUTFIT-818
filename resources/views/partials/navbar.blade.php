@@ -6,7 +6,7 @@
             <li><a href="{{url('men')}}">Men</a></li>
             <li><a href="{{url('women')}}">Women</a></li>
             <li><a href="{{url('kids')}}">Kids</a></li>
-            <li><a href="index.php#NewArrivals">New Arrivals</a></li>
+            <li><a href="{{ url('/#NewArrivals') }}">New Arrivals</a></li>
             <li><a href="{{route('contact')}}">Contact</a></li>
             <li><a href="{{ route('products.all') }}">Products</a></li>
 

@@ -6,7 +6,8 @@
         width: 100%;
         height: 400px;
         background-size: cover;
-        background-position: center;
+        /* Show more of the upper area to avoid cutting heads */
+        background-position: center 10%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -109,7 +110,7 @@
                 <img src="{{ asset('storage/' . $product->image) }}" class="h-48 w-full object-cover rounded mb-3" alt="{{ $product->name }}">
                 <h3 class="text-lg font-semibold text-gray-800">{{ $product->name }}</h3>
                 <p class="text-[#536451] font-bold">
-                    <span class="text-sm text-gray-500">Starting from</span> ₹{{ number_format($product->sizes->min('price'), 2) }}
+                    <span class="text-sm text-gray-500">Starting from</span> ₱{{ number_format($product->sizes->min('price'), 2) }}
                 </p>
                 <span class="text-xs mt-2 inline-block {{ $product->status == 'active' ? 'text-green-600' : 'text-gray-500' }}">
                     {{ ucfirst($product->status) }}

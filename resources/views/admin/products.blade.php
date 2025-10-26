@@ -64,7 +64,7 @@
                 <td class="py-3">
                     @forelse ($product->sizes as $size)
                     <div class="text-xs">
-                        <strong>{{ $size->size }}:</strong> ₹{{ number_format($size->price, 2) }}
+                        <strong>{{ $size->size }}:</strong> ₱{{ number_format($size->price, 2) }}
                     </div>
                     @empty
                     <span class="text-gray-400 text-xs">No sizes</span>
@@ -137,7 +137,7 @@
     </div>
 
     <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">Sizes, Prices (₹), & Stock</label>
+        <label class="block text-sm font-medium mb-1">Sizes, Prices (₱), & Stock</label>
         @foreach(['S' => 'Small (S)', 'M' => 'Medium (M)', 'L' => 'Large (L)', 'XL' => 'Extra Large (XL)'] as $code => $label)
         <div class="flex items-center gap-2 mb-2">
             <input type="hidden" name="sizes[{{ $loop->index }}][size]" value="{{ $code }}">
@@ -215,7 +215,7 @@
 
             <!-- Size-based Pricing -->
             <div class="mb-4" id="editSizePrices">
-                <label class="block text-sm font-medium mb-1">Sizes, Prices (₹), & Stock</label>
+                <label class="block text-sm font-medium mb-1">Sizes, Prices (₱), & Stock</label>
                 @foreach(['S' => 'Small (S)', 'M' => 'Medium (M)', 'L' => 'Large (L)', 'XL' => 'Extra Large (XL)'] as $code => $label)
                 <div class="flex items-center gap-2 mb-2">
                     <input type="hidden" name="sizes[{{ $loop->index }}][size]" value="{{ $code }}">

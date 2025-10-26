@@ -99,7 +99,7 @@
         const images = [
             "{{ asset('assets/images/carousel_2.jpeg')}}",
             "{{ asset('assets/images/carousel_3.jpg')}}",
-            "{{ asset('assets/images/image_1.jpg') }}",
+            "{{ asset('assets/images/Image_1.jpg') }}",
             "{{asset('assets/images/carousel_1.jpg')}}"
         ];
 

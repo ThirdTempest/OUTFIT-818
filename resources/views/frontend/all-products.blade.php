@@ -103,7 +103,7 @@
                                 @endphp
 
                                 <p class="text-lg font-bold mb-4" style="color: #536451;">
-                                <span class="text-sm text-gray-500">Starting from</span> ₹{{ number_format($product->sizes->min('price'), 2) }}
+                                <span class="text-sm text-gray-500">Starting from</span> ₱{{ number_format($product->sizes->min('price'), 2) }}
                                 </p>
 
                             </div>

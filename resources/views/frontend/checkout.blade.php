@@ -55,8 +55,8 @@
                                 </div>
                             </td>
                             <td class="py-4 px-4">{{ $item->quantity }}</td>
-                            <td class="py-4 px-4">₹{{ number_format($price, 2) }}</td>
-                            <td class="py-4 px-4">₹{{ number_format($total, 2) }}</td>
+                            <td class="py-4 px-4">₱{{ number_format($price, 2) }}</td>
+                            <td class="py-4 px-4">₱{{ number_format($total, 2) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -155,7 +155,7 @@
 
     <!-- ✅ Submit -->
     <div class="text-right text-xl font-semibold">
-        Total: ₹{{ number_format($grandTotal, 2) }}
+        Total: ₱{{ number_format($grandTotal, 2) }}
     </div>
 
     <div class="text-right">

@@ -98,7 +98,7 @@
 
     {{-- Price --}}
     <div class="mb-4">
-        <label for="price" class="block text-sm font-medium text-gray-700">Price (₹)</label>
+        <label for="price" class="block text-sm font-medium text-gray-700">Price (₱)</label>
         <input type="number" step="0.01" name="price" id="price" value="{{ old('price') }}"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm">
         @error('price')
@@ -165,7 +165,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="editPrice" class="block text-sm font-medium text-gray-700">Price (₹)</label>
+                <label for="editPrice" class="block text-sm font-medium text-gray-700">Price (₱)</label>
                 <input type="number" step="0.01" name="price" id="editPrice"
                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     required>

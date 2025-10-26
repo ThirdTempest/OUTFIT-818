@@ -11,7 +11,7 @@
                     <th class="px-4 py-3 text-left">#</th>
                     <th class="px-4 py-3 text-left">Order ID</th>
                     <th class="px-4 py-3 text-left">User</th>
-                    <th class="px-4 py-3 text-left">Total (₹)</th>
+                    <th class="px-4 py-3 text-left">Total (₱)</th>
                     <th class="px-4 py-3 text-left">Status</th>
                     <th class="px-4 py-3 text-left">Date</th>
                     <th class="px-4 py-3 text-center">Actions</th>
@@ -23,7 +23,7 @@
                     <td class="px-4 py-3">{{ $loop->iteration }}</td>
                     <td class="px-4 py-3 font-mono">{{ $order->order_id }}</td>
                     <td class="px-4 py-3">{{ $order->user->name ?? 'Guest' }}</td>
-                    <td class="px-4 py-3">₹{{ number_format($order->total_amount, 2) }}</td>
+                    <td class="px-4 py-3">₱{{ number_format($order->total_amount, 2) }}</td>
                     <td class="px-4 py-3 capitalize">
                         <span class="inline-block px-2 py-1 rounded-full text-xs font-medium
                             {{ $order->status === 'pending' ? 'bg-yellow-100 text-yellow-800' :

@@ -33,7 +33,7 @@
 
             <p><strong>Order ID:</strong> {{ $order->order_id }}</p>
             <p><strong>Date:</strong> {{ $order->created_at->format('d M Y, h:i A') }}</p>
-            <p><strong>Total:</strong> ₹{{ number_format($order->total_amount, 2) }}</p>
+            <p><strong>Total:</strong> ₱{{ number_format($order->total_amount, 2) }}</p>
         </div>
 
         <div class="bg-white p-6 rounded shadow">
@@ -63,8 +63,8 @@
                         </td>
                         <td class="py-4 px-4">{{ $item->size }}</td>
                         <td class="py-4 px-4">{{ $item->quantity }}</td>
-                        <td class="py-4 px-4">₹{{ number_format($item->price, 2) }}</td>
-                        <td class="py-4 px-4">₹{{ number_format($item->price * $item->quantity, 2) }}</td>
+                        <td class="py-4 px-4">₱{{ number_format($item->price, 2) }}</td>
+                        <td class="py-4 px-4">₱{{ number_format($item->price * $item->quantity, 2) }}</td>
                     </tr>
                     @endforeach
                 </tbody>

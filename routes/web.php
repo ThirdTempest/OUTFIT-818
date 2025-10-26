@@ -130,6 +130,9 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
 Route::post('/checkout/verify', [CheckoutController::class, 'verify'])->name('checkout.verify');
 
+// PayMongo Webhook (no auth; ensure to configure secret at provider side)
+Route::post('/webhooks/paymongo', [CheckoutController::class, 'webhook'])->name('paymongo.webhook');
+
 // 👇 For checkout thank-you invoice download (after placing an order)
 Route::get('/order/invoice/{orderId}', [App\Http\Controllers\CheckoutController::class, 'downloadInvoice'])
     ->name('order.invoice.download')

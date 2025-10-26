@@ -38,8 +38,8 @@
                     @foreach ($orders as $order)
                     <tr>
                         <td class="px-6 py-4">{{ $order->order_id }}</td>
-                        <td class="px-6 py-4">{{ $order->created_at->setTimezone('Asia/Kolkata')->format('d M Y, h:i A') }}</td>
-                        <td class="px-6 py-4">₹{{ number_format($order->total_amount, 2) }}</td>
+                        <td class="px-6 py-4">{{ $order->created_at->format('d M Y, h:i A') }}</td>
+                        <td class="px-6 py-4">₱{{ number_format($order->total_amount, 2) }}</td>
                         <td class="px-6 py-4 capitalize">
                             @if($order->status === 'paid')
                             <span class="text-green-600 font-semibold">Paid</span>

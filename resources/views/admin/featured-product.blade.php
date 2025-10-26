@@ -20,8 +20,8 @@
             <p class="text-gray-600 mt-2 text-sm">{{ $product->tagline }}</p>
             <p class="text-gray-600 mt-1 text-sm">{{ $product->description }}</p>
             <div class="mt-4 price-box flex gap-3 items-center">
-                <span class="original-price line-through text-gray-500">₹{{ number_format($product->original_price) }}</span>
-                <span class="discounted-price text-lg text-[#536451] font-bold">₹{{ number_format($product->discounted_price) }}</span>
+                <span class="original-price line-through text-gray-500">₱{{ number_format($product->original_price) }}</span>
+                <span class="discounted-price text-lg text-[#536451] font-bold">₱{{ number_format($product->discounted_price) }}</span>
                 <span class="discount-badge bg-red-100 text-red-600 text-xs px-2 py-1 rounded">
                     -{{ round(100 - ($product->discounted_price / $product->original_price) * 100) }}%
                 </span>
@@ -87,11 +87,11 @@
 
             <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Original Price (₹)</label>
+                    <label class="block text-sm font-medium text-gray-700">Original Price (₱)</label>
                     <input type="number" name="original_price" value="{{ $product->original_price }}" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Discounted Price (₹)</label>
+                    <label class="block text-sm font-medium text-gray-700">Discounted Price (₱)</label>
                     <input type="number" name="discounted_price" value="{{ $product->discounted_price }}" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                 </div>
             </div>
@@ -167,7 +167,7 @@
 
     <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-            <label class="block text-sm font-medium text-gray-700">Original Price (₹)</label>
+            <label class="block text-sm font-medium text-gray-700">Original Price (₱)</label>
             <input type="number" name="original_price" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
             @error('original_price')
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -175,7 +175,7 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700">Discounted Price (₹)</label>
+            <label class="block text-sm font-medium text-gray-700">Discounted Price (₱)</label>
             <input type="number" name="discounted_price" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
             @error('discounted_price')
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>

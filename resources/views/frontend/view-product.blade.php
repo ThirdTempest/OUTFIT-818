@@ -147,7 +147,7 @@
             const stock = selectedOption.getAttribute('data-stock');
 
             if (price) {
-                priceLabel.innerText = '₹' + parseFloat(price).toFixed(2);
+                priceLabel.innerText = '₱' + parseFloat(price).toFixed(2);
             } else {
                 priceLabel.innerText = 'Select Size';
             }
@@ -239,7 +239,7 @@
                 const price = selectedOption.getAttribute('data-price');
 
                 if (price) {
-                    priceDisplay.textContent = '₹' + parseFloat(price).toFixed(2);
+                    priceDisplay.textContent = '₱' + parseFloat(price).toFixed(2);
                 } else {
                     priceDisplay.textContent = 'Select Size';
                 }

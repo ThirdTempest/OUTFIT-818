@@ -61,7 +61,7 @@
                 <div class="product-image" style="background-image: url('{{ asset('storage/' . $arrival->image) }}');"></div>
                 <div class="product-info">
                     <h3>{{ $arrival->name }}</h3>
-                    <p class="price">₹{{ number_format($arrival->price) }}</p>
+                    <p class="price">₱{{ number_format($arrival->price) }}</p>
                     <a href="#" class="buy-btn">Shop Now</a>
                 </div>
             </div>
@@ -105,8 +105,8 @@ $featured = \App\Models\FeaturedProduct::where('is_active', true)->latest()->fir
                 <p class="product-tagline">"{{ $featured->tagline }}"</p>
                 <p class="product-description">{{ $featured->description }}</p>
                 <div class="price-box">
-                    <span class="original-price">₹{{ number_format($featured->original_price) }}</span>
-                    <span class="discounted-price">₹{{ number_format($featured->discounted_price) }}</span>
+                    <span class="original-price">₱{{ number_format($featured->original_price) }}</span>
+                    <span class="discounted-price">₱{{ number_format($featured->discounted_price) }}</span>
                     <span class="discount-badge">-{{ round(100 - ($featured->discounted_price / $featured->original_price) * 100) }}%</span>
                 </div>
                 @if($featured->button_text && $featured->button_link)

@@ -70,8 +70,8 @@
                             </div>
                         </td>
                         <td class="py-4 px-6">{{ $item->quantity }}</td>
-                        <td class="py-4 px-6">₹{{ number_format($price, 2) }}</td>
-                        <td class="py-4 px-6">₹{{ number_format($total, 2) }}</td>
+                        <td class="py-4 px-6">₱{{ number_format($price, 2) }}</td>
+                        <td class="py-4 px-6">₱{{ number_format($total, 2) }}</td>
                         <td class="py-4 px-6 text-center">
                             <form action="{{ route('cart.remove', $item->id) }}" method="POST" onsubmit="return confirm('Remove this item?');">
                                 @csrf
@@ -87,7 +87,7 @@
         </div>
 
         <div class="mt-6 flex justify-between items-center btn-green">
-            <p class="text-xl font-semibold">Grand Total: ₹{{ number_format($grandTotal, 2) }}</p>
+            <p class="text-xl font-semibold">Grand Total: ₱{{ number_format($grandTotal, 2) }}</p>
             <a href="{{ route('checkout') }}" class="bg-green font-semibold py-2 px-6 rounded-lg shadow">
                 Proceed to Checkout
             </a>
